@@ -1,81 +1,114 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Cotação Hapvida</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>Cotação Hapvida - Black Friday</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   </head>
   <body>
     <div class="container">
-    <div class="header">
-      <img src="{{ url_for('static', filename='img/hap.png') }}" alt="Logo" />
-    </div>
-    <div class="container">
-      <h2>Cotação Hapvida</h2>
-      <div class="response-container">
-        {% if valores %}
-        <!-- Benefícios -->
-        <div class="beneficios">
-          <h3>Benefícios do plano {{ plano_selecionado }}:</h3>
-          {% if plano_selecionado == 'enfermaria com obstetrícia (pessoa física) - Coparticipação parcial' or plano_selecionado == 'enfermaria com obstetrícia (pessoa física) - Com coparticipação' or plano_selecionado == 'enfermaria sem obstetrícia (pessoa física) - Coparticipação parcial' or plano_selecionado == 'enfermaria sem obstetrícia (pessoa física) - Com coparticipação' or plano_selecionado == 'apartamento com obstetrícia (pessoa física) - Coparticipação parcial' or plano_selecionado == 'apartamento com obstetrícia (pessoa física) - Com coparticipação' or plano_selecionado == 'apartamento sem obstetrícia (pessoa física) - Coparticipação parcial' or plano_selecionado == 'apartamento sem obstetrícia (pessoa física) - Com coparticipação'%}
-          <ul>
-            <li><span>Urgência e emergência</span></li>
-            <li><span>Consultas</span></li>
-            <li><span>Exames</span></li>
-            <li><span>Odontologia</span></li>
-            <li><span>Internações</span></li>
-            <li><span>Cirurgias</span></li>
-          </ul>
-          {% elif plano_selecionado == 'ambulatorial (pessoa física) - Coparticipação parcial' or plano_selecionado == 'ambulatorial (pessoa física) - Com coparticipação' or plano_selecionado == 'ambulatorial (pessoa jurídica) - Coparticipação parcial' or plano_selecionado == 'ambulatorial (pessoa jurídica) - Com coparticipação'%}
-          <ul>
-            <li><span>Urgência e emergência</span></li>
-            <li><span>Consultas</span></li>
-            <li><span>Exames</span></li>
-            <li><span>Odonto urgente</span></li>
-            <li class="no-mark"><span>Internações</span></li>
-            <li class="no-mark"><span>Cirurgias</span></li>
-          </ul>
-          {% elif plano_selecionado == 'enfermaria (pessoa jurídica) - Coparticipação parcial' or plano_selecionado == 'enfermaria (pessoa jurídica) - Com coparticipação' or plano_selecionado == 'apartamento (pessoa jurídica) - Coparticipação parcial' or plano_selecionado == 'apartamento (pessoa jurídica) - Com coparticipação'%}
-          <ul>
-            <li><span>Urgência e emergência</span></li>
-            <li><span>Consultas</span></li>
-            <li><span>Exames</span></li>
-            <li><span>Internações</span></li>
-            <li><span>Cirurgias</span></li>
-          </ul>
+      <!-- Cabeçalho com logo e banner da Black Friday -->
+      <div class="header">
+        <img src="{{ url_for('static', filename='img/hap.png') }}" alt="Logo" />
+        <h1 class="black-friday-banner">Black Friday Hapvida</h1>
+        <p class="banner-text">Aproveite descontos exclusivos na Black Friday!</p>
+      </div>
+      
+      <!-- Contêiner de Cotação Especial - Black Friday -->
+      <div class="cotacao-container">
+        <h2>Cotação Especial - Black Friday</h2>
+        <div class="response-container">
+          {% if valores %}
+          <div class="beneficios">
+            <h3>Benefícios do plano {{ plano_selecionado }}:</h3>
+
+            {% set planos_enfermaria_apartamento = [
+              'enfermaria com obstetrícia (pessoa física) - Sem coparticipação, exceto terapias',
+              'enfermaria com obstetrícia (pessoa física) - Com coparticipação',
+              'enfermaria sem obstetrícia (pessoa física) - Sem coparticipação, exceto terapias',
+              'enfermaria sem obstetrícia (pessoa física) - Com coparticipação',
+              'apartamento com obstetrícia (pessoa física) - Sem coparticipação, exceto terapias',
+              'apartamento com obstetrícia (pessoa física) - Com coparticipação',
+              'apartamento sem obstetrícia (pessoa física) - Sem coparticipação, exceto terapias',
+              'apartamento sem obstetrícia (pessoa física) - Com coparticipação'
+            ] %}
+
+            {% set planos_ambulatoriais = [
+              'ambulatorial (pessoa física) - Sem coparticipação, exceto terapias',
+              'ambulatorial (pessoa física) - Com coparticipação',
+              'ambulatorial (pessoa jurídica) - Sem coparticipação, exceto terapias',
+              'ambulatorial (pessoa jurídica) - Com coparticipação'
+            ] %}
+
+            {% set planos_pj = [
+              'enfermaria (pessoa jurídica) - Sem coparticipação, exceto terapias',
+              'enfermaria (pessoa jurídica) - Com coparticipação',
+              'apartamento (pessoa jurídica) - Sem coparticipação, exceto terapias',
+              'apartamento (pessoa jurídica) - Com coparticipação'
+            ] %}
+
+            {% if plano_selecionado in planos_enfermaria_apartamento %}
+            <ul>
+              <li><span>Urgência e emergência</span></li>
+              <li><span>Consultas</span></li>
+              <li><span>Exames</span></li>
+              <li><span>Odonto urgente</span></li>
+              <li><span>Internações</span></li>
+              <li><span>Cirurgias</span></li>
+            </ul>
+            {% elif plano_selecionado in planos_ambulatoriais %}
+            <ul>
+              <li><span>Urgência e emergência</span></li>
+              <li><span>Consultas</span></li>
+              <li><span>Exames</span></li>
+              <li><span>Odonto urgente</span></li>
+              <li class="no-mark"><span>Internações</span></li>
+              <li class="no-mark"><span>Cirurgias</span></li>
+            </ul>
+            {% elif plano_selecionado in planos_pj %}
+            <ul>
+              <li><span>Urgência e emergência</span></li>
+              <li><span>Consultas</span></li>
+              <li><span>Exames</span></li>
+              <li><span>Internações</span></li>
+              <li><span>Cirurgias</span></li>
+            </ul>
+            {% else %}
+            <p>Benefícios indisponíveis para o plano selecionado.</p>
+            {% endif %}
+          </div>
+
+          <!-- Valores -->
+          <p>Valores do plano <strong>{{ plano_selecionado }}</strong> para cada idade:</p>
+          {% for idade, detalhes in valores.items() %}
+          {% for plano in detalhes['plano'] %}
+          <p>Idade: {{ idade }}, Valor do plano: R$ {{ '{:.2f}'.format(plano) }}</p>
+          {% endfor %}
+          {% endfor %}
+          {% if desconto_aplicado %}
+          <p class="valor-desconto">Valor Total com Desconto de Black Friday: R$ {{ total_valor }}</p>
           {% else %}
-          <p>Benefícios indisponíveis para o plano selecionado.</p>
+          <p class="valor">Valor Total: R$ {{ total_valor }}</p>
+          {% endif %}
+          {% else %}
+          <p>Nenhum valor disponível.</p>
           {% endif %}
         </div>
-
-        <!-- Valores -->
-        <p>
-          Valores do plano <strong>{{ plano_selecionado }}</strong> para cada
-          idade:
-        </p>
-        {% for idade, detalhes in valores.items() %} {% for plano in
-        detalhes['plano'] %}
-        <p>
-          Idade: {{ idade }}, Valor do plano: R$ {{ '{:.2f}'.format(plano) }}
-        </p>
-        {% endfor %} {% endfor %} {% if desconto_aplicado %}
-        <p class="valor-desconto">
-          Valor Total com Desconto: R$ {{ total_valor }}
-        </p>
-        {% else %}
-        <p class="valor">Valor Total: R$ {{ total_valor }}</p>
-        {% endif %} {% else %}
-        <p>Nenhum valor disponível.</p>
-        {% endif %}
-
-        <form action="/" method="get">
-          <div class="form-group">
-            <button type="submit">Nova Cotação</button>
-          </div>
-        </form>
       </div>
+
+      <!-- Botão "Nova Cotação" movido para fora do contêiner interno -->
+      <form action="/" method="get">
+        <div class="form-group">
+          <button type="submit">Nova Cotação</button>
+        </div>
+      </form>
     </div>
+
+    <script>
+      const interval = 120000;
+      function refreshPage() {
+        window.location.reload();
+      }
+      setInterval(refreshPage, interval);
+    </script>
   </body>
 </html>
